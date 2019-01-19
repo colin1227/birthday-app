@@ -9,6 +9,17 @@ export default class Container extends Component {
             loggedIn: false
         }
     }
+    loggedIn = async() => {
+        try{
+            await this.setState({
+                loggedIn: true
+            })
+            
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
     render(){
 
         return(
@@ -16,13 +27,13 @@ export default class Container extends Component {
                 <Route exact path="/"
                 render={(routeProps) => {
                     return (
-                        <Login {...routeProps} {...this.props}/>
+                        <Login {...routeProps} {...this.props} loggedIn={this.loggedIn}/>
                     )
                 }} />
                 <Route exact path="/homepage"
                 render={(routeProps) => {
                     return (
-                        <Homepage {...routeProps} {...this.props}/>
+                        <Homepage {...routeProps} {...this.props} loggedIn={this.state.loggedIn}/>
                     )
                 }} />
             </Switch>

@@ -20,7 +20,10 @@ class Login extends Component {
         try{
             const csrfCookie = getCookie('csrftoken');
             console.log(csrfCookie)
-            const loginJSON = await fetch('http://localhost:8000/people/post/',{
+            if(csrfCookie === undefined){
+
+            }
+            const loginJSON = await fetch('http://localhost:8000/people/login/',{
             method: "POST",
             body: JSON.stringify({
                 first_name: this.state.first_name,
@@ -32,9 +35,8 @@ class Login extends Component {
             }
             });
             const parsedInfo = await loginJSON.json();
-            console.log(parsedInfo)
             if(parsedInfo.loggedIn === true){
-                    console.log(parsedInfo.first_name, ' logged in')
+                    this.props.loggedIn()
                     this.props.history.push("/homepage")
             }
             else{
